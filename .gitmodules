@@ -1,0 +1,3 @@
+[submodule "kip"]
+	path = kip
+	url = https://github.com/BtheDestroyer/kip
