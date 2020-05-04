@@ -190,23 +190,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\lib\SDL2-VC\include;$(ProjectDir)\lib\imgui;$(ProjectDir)\lib\imgui_sdl;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\kip\Debug;$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\lib\SDL2-VC\include;$(ProjectDir)\lib\imgui;$(ProjectDir)\lib\imgui_sdl;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\kip\Debug;$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\lib\SDL2-VC\include;$(ProjectDir)\lib\imgui;$(ProjectDir)\lib\imgui_sdl;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)kip\Release;$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\lib\SDL2-VC\include;$(ProjectDir)\lib\imgui;$(ProjectDir)\lib\imgui_sdl;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)kip\Release;$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -214,11 +214,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)kip\inc;$(ProjectDir)lib\SDL2-VC\include;$(ProjectDir)lib\imgui;$(ProjectDir)lib\imgui_sdl;$(ProjectDir)inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kip.lib;SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -227,11 +228,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)kip\inc;$(ProjectDir)lib\SDL2-VC\include;$(ProjectDir)lib\imgui;$(ProjectDir)lib\imgui_sdl;$(ProjectDir)inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kip.lib;SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -242,13 +244,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)kip\inc;$(ProjectDir)lib\SDL2-VC\include;$(ProjectDir)lib\imgui;$(ProjectDir)lib\imgui_sdl;$(ProjectDir)inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kip.lib;SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -259,13 +262,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)kip\inc;$(ProjectDir)lib\SDL2-VC\include;$(ProjectDir)lib\imgui;$(ProjectDir)lib\imgui_sdl;$(ProjectDir)inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kip.lib;SDL2.lib;SDL2_mixer.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

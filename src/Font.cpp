@@ -16,12 +16,12 @@ Font::~Font()
 
 SDL_Rect Font::GetLetter(char c)
 {
-
+  return SDL_Rect{};
 }
 
 std::vector<SDL_Rect> Font::GetString(std::string s)
 {
-
+  return std::vector<SDL_Rect>();
 }
 
 void Font::SetPixel(unsigned i, Pixel p)

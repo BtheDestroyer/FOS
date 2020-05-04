@@ -5,6 +5,8 @@
 #include "Window.hpp"
 #include "Input.hpp"
 
+#include "kip.h"
+
 class MainCore
 {
 public:
