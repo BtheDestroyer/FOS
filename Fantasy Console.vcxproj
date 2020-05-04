@@ -191,22 +191,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\kip\Debug;$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration);$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\kip\Debug;$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration);$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)kip\Release;$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration);$(ProjectDir)lib\SDL2-VC\lib\x86\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)kip\Release;$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration);$(ProjectDir)\lib\SDL2-VC\lib\x64\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -11,6 +11,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kip Interpreter", "kip\Kip Interpreter.vcxproj", "{3B8182D8-1978-4AE8-ACD3-A70289D4518F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kip CLI", "Kip CLI\Kip CLI.vcxproj", "{4ABAFF93-B74C-4116-B510-E91F824E3D50}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3B8182D8-1978-4AE8-ACD3-A70289D4518F} = {3B8182D8-1978-4AE8-ACD3-A70289D4518F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
