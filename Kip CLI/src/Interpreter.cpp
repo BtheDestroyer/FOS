@@ -6,13 +6,11 @@
 
 Interpreter::Interpreter()
 {
-  std::cout << "Kip Command Line Interpreter |" << std::endl;
-  std::cout << "-----------------------------/" << std::endl;
-  std::cout << "(c) Bryce Dixon 2020 |" << std::endl;
-  std::cout << "---------------------/" << std::endl;
-  std::cout << "RAM: $000 - $800 |" << std::endl;
-  std::cout << "-----------------/" << std::endl;
-  std::cout << "Kip V" << __KIP_VERSION_MAJOR << "." << __KIP_VERSION_MINOR << std::endl << std::endl;
+  std::cout << "Kip Command Line Interpreter         |RAM: $000 - $800 |" << std::endl;
+  std::cout << "(c) Bryce Dixon 2020                 |-----------------/" << std::endl;
+  std::cout << "https://github.com/bthedestroyer/kip |" << std::endl;
+  std::cout << "-------------------------------------/" << std::endl;
+  std::cout << "Kip V" << kip::versionMajor << "." << kip::versionMinor << std::endl << std::endl;
   kip::MapMemory(memory.data(), uint32_t(memory.size()), 0x0000);
 }
 
@@ -52,36 +50,18 @@ void Interpreter::RunFile(std::string filename)
       file.getline(line, 2048);
       text.push_back(line);
     }
-    unsigned i = 0;
-    unsigned iw = 0;
-    for (size_t c = text.size(); c > 0; c /= 10)
-      ++iw;
-    for (std::string line : text)
+    file.close();
+    std::vector<kip::InterpretResult> results = kip::InterpretLines(text);
+    for (kip::InterpretResult result : results)
     {
-      if (line.empty())
+      if (!result.success)
       {
-        std::string lp = "";
-        unsigned pad = iw;
-        for (unsigned c = ++i; c > 0; c /= 10)
-          --pad;
-        lp.resize(pad, ' ');
-        std::cout << lp << std::to_string(i) << ": " << std::endl;
-        continue;
-      }
-      kip::InterpretResult r = kip::InterpretLine(line);
-      if (!r.success)
-      {
-        std::cerr << "ERR: " << r.str << std::endl;
+        std::cerr << "ERR: " << result.str << std::endl;
         break;
       }
       else
       {
-        std::string lp = "";
-        unsigned pad = iw;
-        for (unsigned c = ++i; c > 0; c /= 10)
-          --pad;
-        lp.resize(pad, ' ');
-        std::cout << lp << std::to_string(i) << ": " << r.str << std::endl;
+        std::cout << result.str << std::endl;
       }
     }
   }
