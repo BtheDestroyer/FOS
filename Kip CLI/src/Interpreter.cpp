@@ -19,12 +19,10 @@ Interpreter::~Interpreter()
   kip::UnmapMemory(memory.data());
 }
 
-
 bool Interpreter::Running()
 {
   return running;
 }
-
 
 void Interpreter::CLIInput()
 {
