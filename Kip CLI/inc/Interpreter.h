@@ -16,6 +16,6 @@ public:
 
 private:
   bool running = true;
-  std::array<uint8_t, 2048> memory;
+  std::array<uint8_t, 0x10000> memory;
 };
 

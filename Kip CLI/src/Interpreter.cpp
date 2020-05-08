@@ -6,12 +6,13 @@
 
 Interpreter::Interpreter()
 {
-  std::cout << "Kip Command Line Interpreter         |RAM: $000 - $800 |" << std::endl;
-  std::cout << "(c) Bryce Dixon 2020                 |-----------------/" << std::endl;
+  std::cout << "Kip Command Line Interpreter         |RAM: $0000 - $FFFF |" << std::endl;
+  std::cout << "(c) Bryce Dixon 2020                 |-------------------/" << std::endl;
   std::cout << "https://github.com/bthedestroyer/kip |" << std::endl;
   std::cout << "-------------------------------------/" << std::endl;
   std::cout << "Kip V" << kip::versionMajor << "." << kip::versionMinor << std::endl << std::endl;
   kip::MapMemory(memory.data(), uint32_t(memory.size()), 0x0000);
+  kip::SetStackPointer(uint32_t(memory.size() - 1));
 }
 
 Interpreter::~Interpreter()
