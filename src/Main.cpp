@@ -111,10 +111,37 @@ public:
     window.Update();
   }
 
-  }
-  
-  void UpdateImGUI(float dt)
+  bool RunBIOS()
   {
+    return RunFile("bios.kip");
+  }
+
+  bool RunFile(std::string filename)
+  {
+    std::ifstream file(filename);
+    if (file.is_open())
+    {
+      std::vector<std::string> text;
+      char line[2048];
+      while (!file.eof())
+      {
+        file.getline(line, 2048);
+        text.push_back(line);
+      }
+      file.close();
+      std::vector<kip::InterpretResult> results = kip::InterpretLines(text);
+      if (results.back().success)
+      {
+        Debug::LogError("Error in script: " + results.back().str);
+        return false;
+      }
+    }
+    else
+    {
+      Debug::LogError("Couldn't read file " + filename);
+      return false;
+    }
+    return true;
   }
 
   bool running = false;
@@ -132,8 +159,9 @@ public:
 int main(int argc, char* argv[])
 {
   MainCore core;
-  while (core.running)
-    core.Update();
+  if (core.RunBIOS())
+    while (core.running)
+      core.Update();
   return 0;
 }
 
