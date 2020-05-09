@@ -1,7 +1,6 @@
 #define __INPUT_CPP
 
 #include "Input.hpp"
-#include "imgui.h"
 
 #undef __INPUT_CPP
 

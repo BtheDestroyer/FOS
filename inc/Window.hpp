@@ -49,10 +49,6 @@ struct Pixel
   bool operator==(const Pixel& p) const;
   bool operator!=(const Pixel& p) const;
 
-  operator ImVec4() const
-  {
-    return ImVec4(float(r) / 0xFF, float(g) / 0xFF, float(b) / 0xFF, float(a) / 0xFF);
-  }
   operator uint32_t() const
   {
     return n;

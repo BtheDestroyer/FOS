@@ -16,12 +16,6 @@
     <Filter Include="Libraries">
       <UniqueIdentifier>{f74b8642-365e-4aa5-ae55-abdca1e4d09d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libraries\dearImGui">
-      <UniqueIdentifier>{c6b0f1f9-11d5-4ea2-a411-8882c274c94e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Libraries\imgui_SDL">
-      <UniqueIdentifier>{641886e5-01e6-4e2e-81e3-aead4447566e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries\SDL2">
       <UniqueIdentifier>{36bbbbe3-efc4-42d3-a5f5-bd5ea28e8ca3}</UniqueIdentifier>
     </Filter>
@@ -31,31 +25,10 @@
     <Filter Include="Header Files\Framework">
       <UniqueIdentifier>{a76099e6-93bf-4cfb-90fd-86aa07e9755d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libraries\dearImGui\Example Implementation">
-      <UniqueIdentifier>{14aadeed-ee69-425d-b0fc-8a87ce171c45}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui\imgui_demo.cpp">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui\imgui_draw.cpp">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui\imgui_widgets.cpp">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui\imgui.cpp">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui_sdl\example.cpp">
-      <Filter>Libraries\imgui_SDL</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\imgui_sdl\imgui_sdl.cpp">
-      <Filter>Libraries\imgui_SDL</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>Source Files\Framework</Filter>
@@ -69,35 +42,11 @@
     <ClCompile Include="src\Audio.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="lib\imgui\examples\imgui_impl_sdl.cpp">
-      <Filter>Libraries\dearImGui\Example Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="src\Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\imgui\imgui.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui\imgui_internal.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui\imstb_rectpack.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui\imstb_textedit.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui\imstb_truetype.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui\imconfig.h">
-      <Filter>Libraries\dearImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\imgui_sdl\imgui_sdl.h">
-      <Filter>Libraries\imgui_SDL</Filter>
-    </ClInclude>
     <ClInclude Include="lib\SDL2-VC\include\begin_code.h">
       <Filter>Libraries\SDL2</Filter>
     </ClInclude>
@@ -362,9 +311,6 @@
     <ClInclude Include="inc\Debug.hpp">
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="lib\imgui\examples\imgui_impl_sdl.h">
-      <Filter>Libraries\dearImGui\Example Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -378,6 +324,9 @@
     </None>
     <None Include="lib\SDL2-VC\include\SDL_config_macosx.h.orig">
       <Filter>Libraries\SDL2</Filter>
+    </None>
+    <None Include="rec\bios.kip">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

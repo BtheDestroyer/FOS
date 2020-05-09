@@ -19,13 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lib\imgui\examples\imgui_impl_sdl.cpp" />
-    <ClCompile Include="lib\imgui\imgui.cpp" />
-    <ClCompile Include="lib\imgui\imgui_demo.cpp" />
-    <ClCompile Include="lib\imgui\imgui_draw.cpp" />
-    <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="lib\imgui_sdl\example.cpp" />
-    <ClCompile Include="lib\imgui_sdl\imgui_sdl.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\Debug.cpp" />
     <ClCompile Include="src\Font.cpp" />
@@ -39,14 +32,6 @@
     <ClInclude Include="inc\Font.hpp" />
     <ClInclude Include="inc\Input.hpp" />
     <ClInclude Include="inc\Window.hpp" />
-    <ClInclude Include="lib\imgui\examples\imgui_impl_sdl.h" />
-    <ClInclude Include="lib\imgui\imconfig.h" />
-    <ClInclude Include="lib\imgui\imgui.h" />
-    <ClInclude Include="lib\imgui\imgui_internal.h" />
-    <ClInclude Include="lib\imgui\imstb_rectpack.h" />
-    <ClInclude Include="lib\imgui\imstb_textedit.h" />
-    <ClInclude Include="lib\imgui\imstb_truetype.h" />
-    <ClInclude Include="lib\imgui_sdl\imgui_sdl.h" />
     <ClInclude Include="lib\SDL2-VC\include\begin_code.h" />
     <ClInclude Include="lib\SDL2-VC\include\close_code.h" />
     <ClInclude Include="lib\SDL2-VC\include\SDL.h" />
@@ -136,6 +121,7 @@
     <None Include="lib\SDL2-VC\include\SDL_config.h.cmake" />
     <None Include="lib\SDL2-VC\include\SDL_config.h.in" />
     <None Include="lib\SDL2-VC\include\SDL_config_macosx.h.orig" />
+    <None Include="rec\bios.kip" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
