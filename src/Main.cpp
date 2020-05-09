@@ -1,5 +1,4 @@
-#include "imgui.h"
-#include "examples/imgui_impl_sdl.h"
+#include <fstream>
 
 #include "Debug.hpp"
 #include "Window.hpp"
@@ -7,20 +6,26 @@
 
 #include "kip.h"
 
+#define MULTITHREAD_MODE 1
+
 class MainCore
 {
 public:
   MainCore()
-    : window("Fantasy Console", 1280, 720)
+    : window("Fantasy OS", 256, 256)
   {
     Debug::Log("Starting...");
     //SDL_SetWindowFullscreen(window.GetSDLWindow(), SDL_WINDOW_FULLSCREEN);
-    ImGui_ImplSDL2_Init(window.GetSDLWindow());
+
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
     graphicsThread = std::thread(&MainCore::DrawLoop, this);
 #endif
+
+    window.Clear(Color::BLACK);
+    drawSurface = SDL_GetWindowSurface(window.GetSDLWindow());
+    kip::MapMemory((uint8_t*)(drawSurface->pixels), window.resX * window.resY * 4, 0x4000);
     Debug::Log("Started!");
     running = true;
   }
@@ -28,7 +33,8 @@ public:
   ~MainCore()
   {
     Debug::Log("Shutting down...");
-    ImGui_ImplSDL2_Shutdown();
+    kip::UnmapMemory(0x4000);
+    drawSurface = nullptr;
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
@@ -68,14 +74,6 @@ public:
         input.HandleEvent(&e);
       }
     }
-    if (!ImGui::GetIO().WantCaptureMouse)
-    {
-      // free to detect clicks
-    }
-    if (!ImGui::GetIO().WantCaptureKeyboard)
-    {
-      // free to detect keyboard
-    }
 
     // Single threading mode
 #if !MULTITHREAD_MODE
@@ -111,28 +109,20 @@ public:
   void Draw(float dt)
   {
     window.Update();
-    UpdateImGUI(dt);
+  }
 
-    window.SetSDLRenderTarget(nullptr);
-    window.Clear(Color::VERY_DARK_GREY);
-    window.ReleaseSDLRenderer();
   }
   
   void UpdateImGUI(float dt)
   {
-    ImGuiIO& io = ImGui::GetIO();
-    io.DeltaTime = dt;
-    io.MousePos = ImVec2(static_cast<float>(input.GetMouseX()), static_cast<float>(input.GetMouseY()));
-    io.MouseDown[0] = input.GetMouseButton(0).held;
-    io.MouseDown[1] = input.GetMouseButton(1).held;
-    io.MouseDown[2] = input.GetMouseButton(2).held;
-    io.MouseWheel = static_cast<float>(input.GetMouseWheel());
   }
 
   bool running = false;
   Window window;
   Input input;
   float timeTillRender = 0;
+
+  SDL_Surface *drawSurface;
 
 #if MULTITHREAD_MODE
   std::thread graphicsThread;

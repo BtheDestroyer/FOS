@@ -2,7 +2,6 @@
 
 #include "Input.hpp"
 #include "imgui.h"
-#include "examples/imgui_impl_sdl.h"
 
 #undef __INPUT_CPP
 
@@ -108,7 +107,6 @@ bool Input::HandleEvent(SDL_Event *event)
 {
   if (event)
   {
-    ImGui_ImplSDL2_ProcessEvent(event);
     if (event->type == SDL_KEYDOWN || event->type == SDL_KEYUP)
     {
       Button &b = GetKey(event->key.keysym.sym);

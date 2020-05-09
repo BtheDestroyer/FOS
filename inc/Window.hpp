@@ -2,7 +2,6 @@
 #define __WINDOW_HPP
 #include <string>
 #include <vector>
-#include <imgui.h>
 #include <mutex>
 #ifdef __WIN32
 #ifndef _MSC_VER
@@ -29,7 +28,7 @@ static const float SCREEN_STRETCH = SCREEN_STRETCH_STD;
 
 static const float SCREEN_ASPECT = float(SCREEN_WIDTH) / float(SCREEN_HEIGHT);
 
-static const int RESOLUTION_SCALE = 2;
+static const int RESOLUTION_SCALE = 1;
 
 struct Pixel
 {
@@ -116,12 +115,7 @@ public:
   bool HandleEvent(SDL_Event *event);
 
   SDL_Window *GetSDLWindow();
-  SDL_Renderer* GetSDLRenderer();
-  SDL_Renderer *GetSDLTextureRenderer();
-  void SetSDLRenderTarget(SDL_Texture* target);
-  void ReleaseSDLRenderer();
-  void SetSDLTextureRenderTarget(SDL_Texture *target);
-  void ReleaseSDLTextureRenderer();
+  SDL_Surface *GetSDLSurface();
 
   int GetId();
   static Window *GetWindow();
@@ -132,12 +126,8 @@ public:
 private:
   static Window* mainWindow;
   SDL_Window *sdlWindow = nullptr;
-  SDL_Renderer* sdlRenderer = nullptr;
-  SDL_Renderer *sdlTextureRenderer = nullptr;
-  SDL_Texture* sdlRTarget = nullptr;
-  SDL_Texture *sdlRTextureTarget = nullptr;
+  SDL_Surface *sdlSurf = nullptr;
   static uint8_t count;
-  SDL_Texture* fontTex;
   bool midFrame;
   int id = -1;
 
