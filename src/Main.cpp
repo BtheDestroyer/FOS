@@ -39,6 +39,12 @@ public:
   ~MainCore()
   {
     Debug::Log("Shutting down...");
+    running = false;
+    // Multi threading mode
+#if MULTITHREAD_MODE
+    // Start Drawing
+    graphicsThread.join();
+#endif
     kip::UnmapMemory(kipMem.data());
     if (drawSurface)
     {
@@ -46,11 +52,6 @@ public:
       SDL_FreeSurface(drawSurface);
       drawSurface = nullptr;
     }
-    // Multi threading mode
-#if MULTITHREAD_MODE
-    // Start Drawing
-    graphicsThread.join();
-#endif
   }
 
   void Update()
