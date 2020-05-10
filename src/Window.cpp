@@ -89,8 +89,63 @@ Window* Window::mainWindow = nullptr;
 uint8_t Window::count = 0;
 std::vector<Window*> Window::windows;
 
+Window::Window(std::string title)
+  : sdlWindow(nullptr), resX(resX_), resY(resY_), midFrame(false)
+{
+  if (count == 0)
+  {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+    {
+      Debug::LogError(std::string("SDL could not initialize! SDL_Error: ") + std::string(SDL_GetError()));
+      return;
+    }
+  }
+  SDL_DisplayMode DM;
+  SDL_GetCurrentDisplayMode(0, &DM);
+  resX_ = DM.w;
+  resY_ = DM.h;
+  sdlWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY, SDL_WINDOW_SHOWN);
+  if (!SDL_GL_SetSwapInterval(0))
+  {
+    Debug::LogError(std::string("Could not disable vsync! SDL_Error: ") + std::string(SDL_GetError()));
+  }
+  if (sdlWindow == nullptr)
+  {
+    Debug::LogError(std::string("Window could not be created! SDL_Error: ") + std::string(SDL_GetError()));
+    return;
+  }
+  sdlSurf = SDL_GetWindowSurface(sdlWindow);
+  if (sdlSurf == nullptr)
+  {
+    Debug::LogError(std::string("Renderer could not be created! SDL_Error: ") + std::string(SDL_GetError()));
+    return;
+  }
+  if (++count > windows.size())
+  {
+    windows.push_back(this);
+    id = count - 1;
+  }
+  else
+  {
+    for (uint8_t i = 0; id == -1 && i < windows.size(); ++i)
+    {
+      if (windows[i] == nullptr)
+      {
+        windows[i] = this;
+        id = i;
+      }
+    }
+  }
+  if (id == -1)
+    Debug::LogError("Window couldn't be added to static list for some reason!");
+
+  Debug::Log("Created window " + std::to_string(id));
+
+  Update();
+}
+
 Window::Window(std::string title, unsigned width, unsigned height)
-  : sdlWindow(nullptr), resX(width), resY(height), midFrame(false)
+  : sdlWindow(nullptr), resX(resX_), resY(resY_), resX_(width), resY_(height), midFrame(false)
 {
   if(count == 0)
   {
@@ -252,6 +307,11 @@ bool Window::HandleEvent(SDL_Event *event)
 SDL_Window *Window::GetSDLWindow()
 {
   return sdlWindow;
+}
+
+SDL_Surface* Window::GetSDLSurface()
+{
+  return sdlSurf;
 }
 
 int Window::GetId()

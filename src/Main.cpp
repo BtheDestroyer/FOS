@@ -12,10 +12,9 @@ class MainCore
 {
 public:
   MainCore()
-    : window("Fantasy OS", 128, 128)
+    : window("Fantasy OS")
   {
     Debug::Log("Starting...");
-    //SDL_SetWindowFullscreen(window.GetSDLWindow(), SDL_WINDOW_FULLSCREEN);
 
     // Multi threading mode
 #if MULTITHREAD_MODE

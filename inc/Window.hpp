@@ -92,6 +92,7 @@ private:
 class Window
 {
 public:
+  Window(std::string title);
   Window(std::string title, unsigned width, unsigned height);
   ~Window();
 
@@ -117,7 +118,7 @@ public:
   static Window *GetWindow();
   static Window *GetWindow(uint8_t id);
 
-  const int resX, resY;
+  const int &resX, &resY;
 
 private:
   static Window* mainWindow;
@@ -126,6 +127,7 @@ private:
   static uint8_t count;
   bool midFrame;
   int id = -1;
+  int resX_, resY_;
 
   Pixel::Mode nPixelMode;
 
