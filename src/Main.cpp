@@ -93,13 +93,13 @@ public:
     float dt = 0;
     while (running)
     {
-      while (dt <= 1.0f / 60.0f)
+      do
       {
         now = std::chrono::high_resolution_clock::now();
         elapsed = now - last;
         micro = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
         dt = micro * 0.000001f;
-      }
+      } while (dt <= 1.0f / 60.0f);
       Draw(dt);
       last = now;
     }
