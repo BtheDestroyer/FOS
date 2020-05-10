@@ -112,7 +112,7 @@ public:
 
   bool RunBIOS()
   {
-    return RunFile("bios.kip");
+    return RunFile("rec/bios.kip");
   }
 
   bool RunFile(std::string filename)
