@@ -1,4 +1,5 @@
 #include <fstream>
+#include <array>
 
 #include "Debug.hpp"
 #include "Window.hpp"
@@ -16,6 +17,7 @@ public:
   {
     Debug::Log("Starting...");
 
+    kip::MapMemory(kipMem.data(), kipMem.size(), 0x0000);
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
@@ -34,6 +36,7 @@ public:
     Debug::Log("Shutting down...");
     kip::UnmapMemory(0x4000);
     drawSurface = nullptr;
+    kip::UnmapMemory(kipMem.data());
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
@@ -148,6 +151,7 @@ public:
   Input input;
   float timeTillRender = 0;
 
+  std::array<uint8_t, 0x4000> kipMem;
   SDL_Surface *drawSurface;
 
 #if MULTITHREAD_MODE
