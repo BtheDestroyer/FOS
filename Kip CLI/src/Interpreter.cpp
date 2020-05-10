@@ -39,31 +39,29 @@ void Interpreter::CLIInput()
 
 void Interpreter::RunFile(std::string filename)
 {
-  std::ifstream file(filename);
-  if (file.is_open())
+  std::vector<std::string> lines;
   {
-    std::vector<std::string> text;
-    char line[2048];
-    while (!file.eof())
+    kip::InterpretResult result = kip::LoadFile(filename, lines);
+    if (!result.success)
+      std::cerr << "ERR: " << result.str << std::endl;
+  }
+  size_t folderLen = 0;
+  if (filename.find_last_of('/') != size_t(-1))
+    folderLen = filename.find_last_of('/');
+  if (filename.find_last_of('\\') != size_t(-1))
+    folderLen = std::max(folderLen, filename.find_last_of('\\'));
+  std::string folder = filename.substr(0, folderLen);
+  std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder);
+  for (kip::InterpretResult result : results)
+  {
+    if (!result.success)
     {
-      file.getline(line, 2048);
-      text.push_back(line);
+      std::cerr << "ERR: " << result.str << std::endl;
+      break;
     }
-    file.close();
-    std::vector<kip::InterpretResult> results = kip::InterpretLines(text);
-    for (kip::InterpretResult result : results)
+    else
     {
-      if (!result.success)
-      {
-        std::cerr << "ERR: " << result.str << std::endl;
-        break;
-      }
-      else
-      {
-        std::cout << result.str << std::endl;
-      }
+      std::cout << result.str << std::endl;
     }
   }
-  else
-    std::cerr << "ERR: Couldn't read file " << filename << std::endl;
 }
