@@ -2,7 +2,7 @@
 
 >start
 >create_palette
-<rec/color_labels.kip
+<color_labels.kip
 STB $FF $00000 ; Red
 STB $00 $00001
 STB $00 $00002
