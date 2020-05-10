@@ -1,11 +1,11 @@
 ; List of labels that define the memory addresses of common palette colors
 
->color_red $00000
->color_green $00003
->color_blue $00006
->color_purple $0009
->color_cyan $000C
->color_yellow $000F
->color_white $0012
->color_gray $0015
->color_black $0018
+>color_red    $3000
+>color_green  $3003
+>color_blue   $3006
+>color_purple $3009
+>color_cyan   $300C
+>color_yellow $300F
+>color_white  $3012
+>color_gray   $3015
+>color_black  $3018

@@ -1,59 +1,67 @@
 ; BIOS file for FOS
 
->start
->create_palette
 <color_labels.kip
-STB $FF $00000 ; Red
-STB $00 $00001
-STB $00 $00002
-STB $00 $00003 ; Green
-STB $FF $00004
-STB $00 $00005
-STB $00 $00006 ; Blue
-STB $00 $00007
-STB $FF $00008
-STB $FF $00009 ; Purple
-STB $00 $0000A
-STB $FF $0000B
-STB $00 $0000C ; Cyan
-STB $FF $0000D
-STB $FF $0000E
-STB $FF $0000F ; Yellow
-STB $FF $00010
-STB $00 $00011
-STB $00 $00012 ; White
-STB $FF $00013
-STB $FF $00014
-STB $00 $00015 ; Grey
-STB $FF $00016
-STB $FF $00017
-STB $00 $00018 ; Black
-STB $FF $00019
-STB $FF $0001A
+>create_palette
+STB $FF $3000 ; Red
+STB $00 $3001
+STB $00 $3002
+STB $00 $3003 ; Green
+STB $FF $3004
+STB $00 $3005
+STB $00 $3006 ; Blue
+STB $00 $3007
+STB $FF $3008
+STB $FF $3009 ; Purple
+STB $00 $300A
+STB $FF $300B
+STB $00 $300C ; Cyan
+STB $FF $300D
+STB $FF $300E
+STB $FF $300F ; Yellow
+STB $FF $3010
+STB $00 $3011
+STB $FF $3012 ; White
+STB $FF $3013
+STB $FF $3014
+STB $88 $3015 ; Grey
+STB $88 $3016
+STB $88 $3017
+STB $00 $3018 ; Black
+STB $00 $3019
+STB $00 $301A
+POA $0000     ; Pop return address
+JMP *$0000    ; Return
 
 >gradient_animation
-FIL $00 $4000 $0C00 ; Draw a gradient
-FIL $11 $4C00 $0C00 ; Draw a gradient
-FIL $22 $5800 $0C00 ; Draw a gradient
-FIL $33 $6400 $0C00 ; Draw a gradient
-FIL $44 $7000 $0C00 ; Draw a gradient
-FIL $55 $7C00 $0C00 ; Draw a gradient
-FIL $66 $8800 $0C00 ; Draw a gradient
-FIL $77 $9400 $0C00 ; Draw a gradient
-FIL $88 $A000 $0C00 ; Draw a gradient
-FIL $99 $AC00 $0C00 ; Draw a gradient
-FIL $AA $B800 $0C00 ; Draw a gradient
-FIL $BB $C400 $0C00 ; Draw a gradient
-FIL $CC $D000 $0C00 ; Draw a gradient
-FIL $DD $DC00 $0C00 ; Draw a gradient
-FIL $EE $E800 $0C00 ; Draw a gradient
-FIL $FF $F400 $0C00 ; Draw a gradient
-FIL $FF $4000 $C000 ; fill screen with white
-FIL $00 $4000 $C000 ; fill screen with black
-CPY color_red    $4DEC $3 ; Draw red pixel
-CPY color_green  $4DEF $3 ; Draw green pixel
-CPY color_blue   $4DF2 $3 ; Draw blue pixel
-CPY color_purple $4DF5 $3 ; Draw purple pixel
-CPY color_cyan   $4DF8 $3 ; Draw cyan pixel
-CPY color_yellow $4DFA $3 ; Draw yellow pixel
-;JMP start
+FIL $00 $08000 $0C00 ; Draw a gradient
+FIL $11 $08C00 $0C00 ; Draw a gradient
+FIL $22 $09800 $0C00 ; Draw a gradient
+FIL $33 $0A400 $0C00 ; Draw a gradient
+FIL $44 $0B000 $0C00 ; Draw a gradient
+FIL $55 $0BC00 $0C00 ; Draw a gradient
+FIL $66 $0C800 $0C00 ; Draw a gradient
+FIL $77 $0D400 $0C00 ; Draw a gradient
+FIL $88 $0E000 $0C00 ; Draw a gradient
+FIL $99 $0EC00 $0C00 ; Draw a gradient
+FIL $AA $0F800 $0C00 ; Draw a gradient
+FIL $BB $10400 $0C00 ; Draw a gradient
+FIL $CC $11000 $0C00 ; Draw a gradient
+FIL $DD $11C00 $0C00 ; Draw a gradient
+FIL $EE $12800 $0C00 ; Draw a gradient
+FIL $FF $13400 $0C00 ; Draw a gradient
+FIL $FF $08000 $C000 ; fill screen with white
+FIL $00 $08000 $C000 ; fill screen with black
+POA $0000           ; Pop return address
+JMP *$0000          ; Return
+
+>fos_logo
+STA $803C $0000
+<fos_logo.kip
+POA $0000                          ; Pop return address
+JMP *$0000                         ; Return
+
+>start
+CAL create_palette
+CAL gradient_animation
+CAL fos_logo
+

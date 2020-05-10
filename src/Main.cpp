@@ -18,6 +18,7 @@ public:
     Debug::Log("Starting...");
 
     kip::MapMemory(kipMem.data(), kipMem.size(), 0x0000);
+    kip::SetStackPointer(kipMem.size());
     window.Clear(Color::BLACK);
     drawSurface = SDL_CreateRGBSurfaceWithFormat(0, 128, 128, 24, SDL_PIXELFORMAT_RGB24);
     if (drawSurface == nullptr)
@@ -25,7 +26,7 @@ public:
       Debug::LogError("Could not create drawSurface!");
       return;
     }
-    kip::MapMemory((uint8_t*)(drawSurface->pixels), window.resX * window.resY * 4, 0x4000);
+    kip::MapMemory((uint8_t*)(drawSurface->pixels), drawSurface->w * drawSurface->h * drawSurface->format->BytesPerPixel, kipMem.size());
     Debug::Log("Started!");
     running = true;
 
@@ -44,6 +45,7 @@ public:
 #if MULTITHREAD_MODE
     // Start Drawing
     graphicsThread.join();
+    kipThread.join();
 #endif
     kip::UnmapMemory(kipMem.data());
     if (drawSurface)
@@ -132,19 +134,19 @@ public:
     window.Update();
   }
 
-  bool RunBIOS()
+  void RunBIOS()
   {
-    return RunFile("rec/bios.kip");
+    kipThread = std::thread(MainCore::RunFile, std::string("rec/bios.kip"));
   }
 
-  bool RunFile(std::string filename)
+  static void RunFile(std::string filename)
   {
     std::vector<std::string> lines;
     kip::InterpretResult result = kip::LoadFile(filename, lines);
     if (!result.success)
     {
       Debug::LogError(result.str);
-      return false;
+      return;
     }
     size_t folderLen = 0;
     if (filename.find_last_of('/') != size_t(-1))
@@ -156,9 +158,9 @@ public:
     if (results.size() > 0 && !results.back().success)
     {
       Debug::LogError("Error in script: " + results.back().str);
-      return false;
+      return;
     }
-    return true;
+    return;
   }
 
   bool running = false;
@@ -166,20 +168,21 @@ public:
   Input input;
   float timeTillRender = 0;
 
-  std::array<uint8_t, 0x4000> kipMem;
+  std::array<uint8_t, 0x8000> kipMem;
   SDL_Surface *drawSurface;
 
 #if MULTITHREAD_MODE
   std::thread graphicsThread;
+  std::thread kipThread;
 #endif
 };
 
 int main(int argc, char* argv[])
 {
   MainCore core;
-  if (core.RunBIOS())
-    while (core.running)
-      core.Update();
+  core.RunBIOS();
+  while (core.running)
+    core.Update();
   return 0;
 }
 
