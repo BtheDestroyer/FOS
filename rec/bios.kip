@@ -2,39 +2,31 @@
 
 >start
 >create_palette
->color_red $00000
+<rec/color_labels.kip
 STB $FF $00000 ; Red
 STB $00 $00001
 STB $00 $00002
->color_green $00003
 STB $00 $00003 ; Green
 STB $FF $00004
 STB $00 $00005
->color_blue $00006
 STB $00 $00006 ; Blue
 STB $00 $00007
 STB $FF $00008
->color_purple $0009
 STB $FF $00009 ; Purple
 STB $00 $0000A
 STB $FF $0000B
->color_cyan $000C
 STB $00 $0000C ; Cyan
 STB $FF $0000D
 STB $FF $0000E
->color_yellow $000F
 STB $FF $0000F ; Yellow
 STB $FF $00010
 STB $00 $00011
->color_white $0012
 STB $00 $00012 ; White
 STB $FF $00013
 STB $FF $00014
->color_gray $0015
 STB $00 $00015 ; Grey
 STB $FF $00016
 STB $FF $00017
->color_black $0018
 STB $00 $00018 ; Black
 STB $FF $00019
 STB $FF $0001A
