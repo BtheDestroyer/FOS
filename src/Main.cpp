@@ -18,25 +18,34 @@ public:
     Debug::Log("Starting...");
 
     kip::MapMemory(kipMem.data(), kipMem.size(), 0x0000);
+    window.Clear(Color::BLACK);
+    drawSurface = SDL_CreateRGBSurfaceWithFormat(0, 128, 128, 24, SDL_PIXELFORMAT_RGB24);
+    if (drawSurface == nullptr)
+    {
+      Debug::LogError("Could not create drawSurface!");
+      return;
+    }
+    kip::MapMemory((uint8_t*)(drawSurface->pixels), window.resX * window.resY * 4, 0x4000);
+    Debug::Log("Started!");
+    running = true;
+
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
     graphicsThread = std::thread(&MainCore::DrawLoop, this);
 #endif
-
-    window.Clear(Color::BLACK);
-    drawSurface = SDL_GetWindowSurface(window.GetSDLWindow());
-    kip::MapMemory((uint8_t*)(drawSurface->pixels), window.resX * window.resY * 4, 0x4000);
-    Debug::Log("Started!");
-    running = true;
   }
 
   ~MainCore()
   {
     Debug::Log("Shutting down...");
-    kip::UnmapMemory(0x4000);
-    drawSurface = nullptr;
     kip::UnmapMemory(kipMem.data());
+    if (drawSurface)
+    {
+      kip::UnmapMemory((uint8_t*)(drawSurface->pixels));
+      SDL_FreeSurface(drawSurface);
+      drawSurface = nullptr;
+    }
     // Multi threading mode
 #if MULTITHREAD_MODE
     // Start Drawing
@@ -110,6 +119,15 @@ public:
 
   void Draw(float dt)
   {
+    if (drawSurface)
+    {
+      SDL_Rect drect{ 0, 0, window.resX, window.resY };
+      if (window.resX > window.resY)
+        drect = { int((window.resX - window.resY) * 0.5f), 0, window.resY, window.resY };
+      else if (window.resX < window.resY)
+        drect = { 0, int((window.resY - window.resX) * 0.5f), window.resX, window.resX };
+      SDL_BlitScaled(drawSurface, nullptr, window.GetSDLSurface(), &drect);
+    }
     window.Update();
   }
 
@@ -132,7 +150,7 @@ public:
       }
       file.close();
       std::vector<kip::InterpretResult> results = kip::InterpretLines(text);
-      if (results.back().success)
+      if (results.size() > 0 && !results.back().success)
       {
         Debug::LogError("Error in script: " + results.back().str);
         return false;
