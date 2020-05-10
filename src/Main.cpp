@@ -139,27 +139,23 @@ public:
 
   bool RunFile(std::string filename)
   {
-    std::ifstream file(filename);
-    if (file.is_open())
+    std::vector<std::string> lines;
+    kip::InterpretResult result = kip::LoadFile(filename, lines);
+    if (!result.success)
     {
-      std::vector<std::string> text;
-      char line[2048];
-      while (!file.eof())
-      {
-        file.getline(line, 2048);
-        text.push_back(line);
-      }
-      file.close();
-      std::vector<kip::InterpretResult> results = kip::InterpretLines(text);
-      if (results.size() > 0 && !results.back().success)
-      {
-        Debug::LogError("Error in script: " + results.back().str);
-        return false;
-      }
+      Debug::LogError(result.str);
+      return false;
     }
-    else
+    size_t folderLen = 0;
+    if (filename.find_last_of('/') != size_t(-1))
+      folderLen = filename.find_last_of('/');
+    if (filename.find_last_of('\\') != size_t(-1))
+      folderLen = std::max(folderLen, filename.find_last_of('\\'));
+    std::string folder = filename.substr(0, folderLen);
+    std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder);
+    if (results.size() > 0 && !results.back().success)
     {
-      Debug::LogError("Couldn't read file " + filename);
+      Debug::LogError("Error in script: " + results.back().str);
       return false;
     }
     return true;
