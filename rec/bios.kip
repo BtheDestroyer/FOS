@@ -1,67 +1,69 @@
 ; BIOS file for FOS
-
-<color_labels.kip
->create_palette
-STB $FF $3000 ; Red
-STB $00 $3001
-STB $00 $3002
-STB $00 $3003 ; Green
-STB $FF $3004
-STB $00 $3005
-STB $00 $3006 ; Blue
-STB $00 $3007
-STB $FF $3008
-STB $FF $3009 ; Purple
-STB $00 $300A
-STB $FF $300B
-STB $00 $300C ; Cyan
-STB $FF $300D
-STB $FF $300E
-STB $FF $300F ; Yellow
-STB $FF $3010
-STB $00 $3011
-STB $FF $3012 ; White
-STB $FF $3013
-STB $FF $3014
-STB $88 $3015 ; Grey
-STB $88 $3016
-STB $88 $3017
-STB $00 $3018 ; Black
-STB $00 $3019
-STB $00 $301A
-POA $0000     ; Pop return address
-JMP *$0000    ; Return
-
->gradient_animation
-FIL $00 $08000 $0C00 ; Draw a gradient
-FIL $11 $08C00 $0C00 ; Draw a gradient
-FIL $22 $09800 $0C00 ; Draw a gradient
-FIL $33 $0A400 $0C00 ; Draw a gradient
-FIL $44 $0B000 $0C00 ; Draw a gradient
-FIL $55 $0BC00 $0C00 ; Draw a gradient
-FIL $66 $0C800 $0C00 ; Draw a gradient
-FIL $77 $0D400 $0C00 ; Draw a gradient
-FIL $88 $0E000 $0C00 ; Draw a gradient
-FIL $99 $0EC00 $0C00 ; Draw a gradient
-FIL $AA $0F800 $0C00 ; Draw a gradient
-FIL $BB $10400 $0C00 ; Draw a gradient
-FIL $CC $11000 $0C00 ; Draw a gradient
-FIL $DD $11C00 $0C00 ; Draw a gradient
-FIL $EE $12800 $0C00 ; Draw a gradient
-FIL $FF $13400 $0C00 ; Draw a gradient
-FIL $FF $08000 $C000 ; fill screen with white
-FIL $00 $08000 $C000 ; fill screen with black
-POA $0000           ; Pop return address
-JMP *$0000          ; Return
-
->fos_logo
-STA $803C $0000
-<fos_logo.kip
-POA $0000                          ; Pop return address
-JMP *$0000                         ; Return
-
 >start
 CAL create_palette
 CAL gradient_animation
+FIL $22 $08000 $C000 ; fill screen with dark grey
 CAL fos_logo
+STB 20 $0004            |
+>logo_pause             |
+DCB $0004               } Wait 20 frames
+CAL wait_one_frame      |
+JNE logo_pause *$0004 0 |
+STA 128 $0000
+>scroll_splash
+PUB *$0000
+PUB 1
+CAL scroll_up
+POB $0000
+DCB $0000
+JGT scroll_splash *$0000 0
+CAL wait_one_frame
+HLT
 
+<draw_tools.kip
+>gradient_animation  ; No arguments
+CAL wait_one_frame
+FIL $00 $08000 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $11 $08C00 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $22 $09800 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $33 $0A400 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $44 $0B000 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $55 $0BC00 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $66 $0C800 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $77 $0D400 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $88 $0E000 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $99 $0EC00 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $AA $0F800 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $BB $10400 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $CC $11000 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $DD $11C00 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $EE $12800 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $FF $13400 $0C00 ; Draw a gradient
+CAL wait_one_frame
+FIL $FF $08000 $C000 ; fill screen with white
+CAL wait_one_frame
+FIL $00 $08000 $C000 ; fill screen with black
+POA $0000            ; Pop return address
+JMP *$0000           ; Return
+
+>fos_logo            ; No arguments
+CAL wait_for_vsync
+STA $8C3C $0000
+<fos_logo.kip
+POA $0000            ; Pop return address
+JMP *$0000           ; Return

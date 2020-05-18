@@ -1,0 +1,104 @@
+; Subroutine calls and labels for drawing
+<color_labels.kip
+>create_palette ; No arguments
+STB $FF $3000   ; Red
+STB $00 $3001
+STB $00 $3002
+STB $00 $3003   ; Green
+STB $FF $3004
+STB $00 $3005
+STB $00 $3006   ; Blue
+STB $00 $3007
+STB $FF $3008
+STB $FF $3009   ; Purple
+STB $00 $300A
+STB $FF $300B
+STB $00 $300C   ; Cyan
+STB $FF $300D
+STB $FF $300E
+STB $FF $300F   ; Yellow
+STB $FF $3010
+STB $00 $3011
+STB $FF $3012   ; White
+STB $FF $3013
+STB $FF $3014
+STB $88 $3015   ; Grey
+STB $88 $3016
+STB $88 $3017
+STB $00 $3018   ; Black
+STB $00 $3019
+STB $00 $301A
+POA $0000       ; Pop return address
+JMP *$0000      ; Return
+>wait_for_vsync              ; No arguments
+JNE wait_for_vsync *$14000 0
+POA $0000                    ; Pop return address
+JMP *$0000                   ; Return
+>wait_for_draw              ; No arguments
+JNE wait_for_draw *$14000 1
+POA $0000                   ; Pop return address
+JMP *$0000                  ; Return
+>wait_one_frame                   ; No arguments
+STB *$14001 $0000                 ; Store current frame counter
+JEQ wait_one_frame *$14001 *$0000 ; Loop until frame counter changes
+POA $0000                         ; Pop return address
+JMP *$0000                        ; Return
+>scroll_up                   ; Arguments: Scroll speed (B)
+CAL wait_one_frame
+FIL $00 $0000 $0016
+POA $0014
+POB $0010                    ; $0010 <- Scroll amount (in lines)
+PUA *$0014
+STA $0180 $0014              ; $0014 <- Frame width (1 line in bytes)
+MLA *$0010 *$0014 $0018      ; $0018 <- Scroll lines (in bytes)
+STA $8000 $001C              ; $001C <- Current copy destination
+ADA *$001C *$0018 $0020      ; $0020 <- Current copy source
+STB 126 $0028                ; $0028 <- Number of lines left to scroll
+>scroll_up_A
+JLT scroll_up_B *$0028 127
+SBA *$0020 $13FFF $0024
+SBA *$0018 *$0024 $0018
+STA $13FFF *$0020
+JMP scroll_up_C
+>scroll_up_B
+CPY *$0020 *$001C *$0018     ; Copy lines up
+STA *$0020 $001C             ; Copy source address to destination address
+ADA *$0020 *$0018 $0020      ; Calculate new source address
+SBB *$0028 *$0010 $0028      ; Subtract number of lines copied from count left to copy
+JLT scroll_up_B *$0028 127   ; Scroll next block if source is within frame
+>scroll_up_C
+SBA *$0020 *$001C $0024      ; Calculate leftover space
+FIL $00 *$001C *$0024        ; Fill leftover space with black
+>scroll_up_R
+POA $0000                    ; Pop return address
+JMP *$0000                   ; Return
+>scroll_down                 ; Arguments: Scroll speed (B)
+CAL wait_one_frame
+FIL $00 $0000 $0016
+POA $0014
+POB $0010                    ; $0010 <- Scroll amount (in lines)
+PUA *$0014
+STA $0180 $0014              ; $0014 <- Frame width (1 line in bytes)
+MLA *$0010 *$0014 $0018      ; $0018 <- Scroll lines (in bytes)
+STA $14000 $001C             ; $001C <- Current copy destination
+SBA *$001C *$0018 $001C
+SBA *$001C *$0018 $0020      ; $0020 <- Current copy source
+STB 126 $0028                ; $0028 <- Number of lines left to scroll
+>scroll_down_A
+JLT scroll_down_B *$0028 127
+SBA *$0020 $13FFF $0024
+SBA *$0018 *$0024 $0018
+STA $13FFF *$0020
+JMP scroll_down_C
+>scroll_down_B
+CPY *$0020 *$001C *$0018     ; Copy lines up
+STA *$0020 $001C             ; Copy source address to destination address
+SBA *$0020 *$0018 $0020      ; Calculate new source address
+SBB *$0028 *$0010 $0028      ; Subtract number of lines copied from count left to copy
+JLT scroll_down_B *$0028 127 ; Scroll next block if source is within frame
+>scroll_down_C
+SBA *$001C *$0020 $0024      ; Calculate leftover space
+FIL $00 *$001C *$0024        ; Fill leftover space with black
+>scroll_down_R
+POA $0000                    ; Pop return address
+JMP *$0000                   ; Return

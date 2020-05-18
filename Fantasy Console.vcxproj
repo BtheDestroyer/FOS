@@ -122,6 +122,9 @@
     <None Include="lib\SDL2-VC\include\SDL_config.h.in" />
     <None Include="lib\SDL2-VC\include\SDL_config_macosx.h.orig" />
     <None Include="rec\bios.kip" />
+    <None Include="rec\color_labels.kip" />
+    <None Include="rec\draw_tools.kip" />
+    <None Include="rec\fos_logo.kip" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

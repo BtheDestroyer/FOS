@@ -328,5 +328,14 @@
     <None Include="rec\bios.kip">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="rec\fos_logo.kip">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="rec\color_labels.kip">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="rec\draw_tools.kip">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
