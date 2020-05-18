@@ -18,7 +18,9 @@ public:
     Debug::Log("Starting...");
 
     kip::MapMemory(kipMem.data(), kipMem.size(), 0x0000);
-    kip::SetStackPointer(kipMem.size());
+    kip::SetStackPointer(0x8000);
+    kip::MapMemory(&drawingFrame, 1, 0x14000);
+    kip::MapMemory(&frameCounter, 1, 0x14001);
     window.Clear(Color::BLACK);
     drawSurface = SDL_CreateRGBSurfaceWithFormat(0, 128, 128, 24, SDL_PIXELFORMAT_RGB24);
     if (drawSurface == nullptr)
@@ -26,7 +28,7 @@ public:
       Debug::LogError("Could not create drawSurface!");
       return;
     }
-    kip::MapMemory((uint8_t*)(drawSurface->pixels), drawSurface->w * drawSurface->h * drawSurface->format->BytesPerPixel, kipMem.size());
+    kip::MapMemory((uint8_t*)(drawSurface->pixels), drawSurface->w * drawSurface->h * drawSurface->format->BytesPerPixel, 0x8000);
     Debug::Log("Started!");
     running = true;
 
@@ -47,6 +49,8 @@ public:
     graphicsThread.join();
     kipThread.join();
 #endif
+    kip::UnmapMemory(&drawingFrame);
+    kip::UnmapMemory(&frameCounter);
     kip::UnmapMemory(kipMem.data());
     if (drawSurface)
     {
@@ -122,6 +126,7 @@ public:
 
   void Draw(float dt)
   {
+    drawingFrame = 1;
     if (drawSurface)
     {
       SDL_Rect drect{ 0, 0, window.resX, window.resY };
@@ -132,11 +137,13 @@ public:
       SDL_BlitScaled(drawSurface, nullptr, window.GetSDLSurface(), &drect);
     }
     window.Update();
+    drawingFrame = 0;
+    ++frameCounter;
   }
 
   void RunBIOS()
   {
-    kipThread = std::thread(MainCore::RunFile, std::string("rec/bios.kip"));
+    kipThread = std::thread(MainCore::RunFile, "rec/bios.kip");
   }
 
   static void RunFile(std::string filename)
@@ -154,10 +161,17 @@ public:
     if (filename.find_last_of('\\') != size_t(-1))
       folderLen = std::max(folderLen, filename.find_last_of('\\'));
     std::string folder = filename.substr(0, folderLen);
-    std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder);
+    std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder, false);
     if (results.size() > 0 && !results.back().success)
     {
       Debug::LogError("Error in script: " + results.back().str);
+      std::ofstream log("crash.log");
+      if (log.is_open())
+      {
+        for (kip::InterpretResult ir : results)
+          log << ir.str << std::endl;
+        log.close();
+      }
       return;
     }
     return;
@@ -167,6 +181,8 @@ public:
   Window window;
   Input input;
   float timeTillRender = 0;
+  uint8_t drawingFrame = 2;
+  uint8_t frameCounter = 0;
 
   std::array<uint8_t, 0x8000> kipMem;
   SDL_Surface *drawSurface;
@@ -179,10 +195,10 @@ public:
 
 int main(int argc, char* argv[])
 {
-  MainCore core;
-  core.RunBIOS();
-  while (core.running)
-    core.Update();
+  auto core = std::make_unique<MainCore>();
+  core->RunBIOS();
+  while (core->running)
+    core->Update();
   return 0;
 }
 
