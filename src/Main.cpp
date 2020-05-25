@@ -161,7 +161,7 @@ public:
     if (filename.find_last_of('\\') != size_t(-1))
       folderLen = std::max(folderLen, filename.find_last_of('\\'));
     std::string folder = filename.substr(0, folderLen);
-    std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder, false);
+    std::vector<kip::InterpretResult> results = kip::InterpretLines(lines, folder, 255);
     if (results.size() > 0 && !results.back().success)
     {
       Debug::LogError("Error in script: " + results.back().str);
