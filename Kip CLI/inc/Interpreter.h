@@ -1,5 +1,5 @@
 #pragma once
-#include <array>
+#include <vector>
 #include <string>
 #include <cstdint>
 
@@ -16,6 +16,5 @@ public:
 
 private:
   bool running = true;
-  std::array<uint8_t, 0x10000> memory;
+  std::vector<uint8_t> memory;
 };
-

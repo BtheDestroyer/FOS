@@ -160,11 +160,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Compiler.cpp" />
     <ClCompile Include="src\Interpreter.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Compiler.h" />
     <ClInclude Include="inc\Interpreter.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\kip\examples\demo.kip" />
+    <None Include="..\kip\examples\fibonacci.kip" />
+    <None Include="..\kip\examples\functionCall.kip" />
+    <None Include="..\kip\examples\import\child.kip" />
+    <None Include="..\kip\examples\import\parent.kip" />
+    <None Include="..\kip\examples\labels.kip" />
+    <None Include="..\kip\examples\rawBinary\rawbinary.kip" />
+    <None Include="..\kip\examples\recursiveFibonacci.kip" />
+    <None Include="..\kip\examples\slowMUL.kip" />
+    <None Include="..\kip\examples\stack.kip" />
+    <None Include="..\kip\examples\stringLiterals.kip" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Kip CLI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Logo_KIP.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

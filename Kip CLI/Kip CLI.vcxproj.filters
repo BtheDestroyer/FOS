@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Examples">
+      <UniqueIdentifier>{a04f47d4-9be8-4949-b4ff-62cbe540f31a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Examples\import">
+      <UniqueIdentifier>{fab3e471-81c7-4710-94ee-64501908c415}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -21,10 +27,64 @@
     <ClCompile Include="src\Interpreter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Interpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\kip\examples\functionCall.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\labels.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\recursiveFibonacci.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\slowMUL.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\stack.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\stringLiterals.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\demo.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\fibonacci.kip">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\kip\examples\import\child.kip">
+      <Filter>Examples\import</Filter>
+    </None>
+    <None Include="..\kip\examples\import\parent.kip">
+      <Filter>Examples\import</Filter>
+    </None>
+    <None Include="..\kip\examples\rawBinary\rawbinary.kip">
+      <Filter>Examples</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Kip CLI.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Logo_KIP.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

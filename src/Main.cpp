@@ -17,7 +17,7 @@ public:
   {
     Debug::Log("Starting...");
 
-    kip::MapMemory(kipMem.data(), kipMem.size(), 0x0000);
+    kip::MapMemory(kipMem.data(), uint32_t(kipMem.size()), 0x0000);
     kip::SetStackPointer(0x8000);
     kip::MapMemory(&drawingFrame, 1, 0x14000);
     kip::MapMemory(&frameCounter, 1, 0x14001);

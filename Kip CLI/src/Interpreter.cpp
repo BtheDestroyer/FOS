@@ -10,7 +10,8 @@ Interpreter::Interpreter()
   std::cout << "(c) Bryce Dixon 2020                 |-------------------/" << std::endl;
   std::cout << "https://github.com/bthedestroyer/kip |" << std::endl;
   std::cout << "-------------------------------------/" << std::endl;
-  std::cout << "Kip V" << kip::versionMajor << "." << kip::versionMinor << std::endl << std::endl;
+  std::cout << "Kip V" << uint32_t(kip::versionMajor) << "." << uint32_t(kip::versionMinor) << std::endl << std::endl;
+  memory.resize(0x10000);
   kip::MapMemory(memory.data(), uint32_t(memory.size()), 0x0000);
   kip::SetStackPointer(uint32_t(memory.size() - 1));
 }
